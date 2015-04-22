@@ -38,19 +38,23 @@ app.get('/jeopardy', function(req, res){
 app.get('/jeopardy/search', function(req, res){
   var search = req.query.search;
   var value  = req.query.value;
+  var answer = req.query.answer;
 
   var query = Question.find();
   if (search) {
     query = query.$where('this.question.indexOf("' + search + '") > -1');
   }
   if (value) {
-    query = query.where('value').equals(value);
+    query = query.where('value').gte(value);
+  }
+  if (answer) {
+    query = query.$where('this.answer.indexOf("' + answer + '") > -1');
   }
 
   query.exec(function(err, questions){
     if (err) { return res.send(err); }
 
-    res.render('jeopardy', {questions: questions, search:search});
+    res.render('jeopardy', {questions: questions, search:search, value:value});
   });
 });
 
