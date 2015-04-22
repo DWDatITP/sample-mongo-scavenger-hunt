@@ -8,14 +8,32 @@
 
 <h1>Enron Emails</h1>
 
-<a href='/emails/2'>Next page</a>
+<% var prevPage = page - 1; %>
+<% if (prevPage > 0) { %>
+  <a href='/emails/<%= prevPage %>'>Previous page</a>
+<% } %>
+
+<% var nextPage = page + 1; %>
+<a href='/emails/<%= nextPage %>'>Next page</a>
+
+<form action='/emails/search' method='get'>
+  Search subject: <input type='text' name='subject' value='<%= subject %>'><br>
+  <button type='submit'>Search</button>
+</form>
+
+<% if (subject) { %>
+  <h4>Searched for: <%= subject %></h4>
+<% } %>
 
 <ul>
 <% emails.forEach(function(email){ %>
   <li>
     <div class='email'>
       <div class='from'>From: <%= email.sender %></div>
+      <div class='date'>Date: <%= email.date %></div>
       <div class='subject'>Subject: <%= email.subject %></div>
+      <div class='to'>To: <%= email.recipients.join(',') %></div>
+      <div class='text'>Text: <%= email.text %></div>
     </div>
   </li>
 <% }); %>

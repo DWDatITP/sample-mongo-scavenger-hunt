@@ -60,16 +60,34 @@ app.get('/jeopardy/search', function(req, res){
 
 app.get('/emails', function(req, res){
   var page = 1;
-  Email.find({}).limit(25).exec(function(err, emails) {
-    res.render('emails', {emails: emails, page: page});
+  Email.find({}).sort({date:-1}).limit(25).exec(function(err, emails) {
+    res.render('emails', {emails: emails, page: page, subject:''});
   });
 });
 
-app.get('/emails/:page', function(req, res){
-  var page = req.params.page;
+app.get('/emails/search', function(req, res){
+  var page = 1;
+  var subject = req.query.subject;
 
-  Email.find({}).limit(25).exec(function(err, emails) {
-    res.render('emails', {emails: emails, page: page});
+  var query = Email.find().limit(25);
+  query = query.$where('this.subject.indexOf("' + subject + '") > -1');
+
+  console.log('searchign for',subject);
+  console.log('query',query);
+
+  query.exec(function(err, emails) {
+    res.render('emails', {emails: emails, page: page, subject: subject});
+  });
+});
+
+
+app.get('/emails/:page', function(req, res){
+  // it must be an integer
+  var page = parseInt(req.params.page);
+  var toSkip = page * 25;
+
+  Email.find({}).sort({date:-1}).limit(25).skip(toSkip).exec(function(err, emails) {
+    res.render('emails', {emails: emails, page: page, subject: ''});
   });
 });
 
