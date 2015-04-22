@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title></title>
+  <script src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
 </head>
 <body>
 
@@ -31,6 +32,7 @@
 <% if (questions.length) { %>
   <ul>
     <% questions.forEach(function(question) { %>
+       <% var questionId = question.id; %>
 
        <li>
          <div class='question'>
@@ -38,7 +40,12 @@
            <div class='air-date'>Air Date: <%= question.airDate %></div>
            <div class='question-question'><%= question.question %></div>
            <div class='value'>Value: $<%= question.value %></div>
-           <div class='answer'>Answer: <%= question.answer %>?</div>
+           <div class='answer'>
+             <a href='#' class='show-answer' data-question-id='<%= questionId %>'>Show answer</a>
+             <div class='hidden-answer' id='hidden-question-<%= questionId %>' style='display:none'>
+               Answer: <%= question.answer %>?
+             </div>
+           </div>
          </div>
          <hr>
        </li>
@@ -48,6 +55,17 @@
 <% } else { %>
   <h4>No questions found.</h4>
 <% } %>
+
+<script>
+  $(function(){
+    $('.show-answer').click(function(e){
+      e.preventDefault();
+      var questionId = $(e.target).data('question-id');
+      $(e.target).hide();
+      $('#hidden-question-' + questionId).show();
+    });
+  });
+</script>
 
 </body>
 </html>
