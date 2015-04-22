@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+<h1>Jeopardy Questions</h1>
+
+<form action='/jeopardy/search' method='get'>
+  Search: <input type="text" name="search" value=""><br>
+  Question Value:
+   <select name="value">
+     <option></option>
+     <option value="200">$200</option>
+     <option value="400">$400</option>
+     <option value="600">$600</option>
+     <option value="800">$800</option>
+     <option value="1000">$1000</option>
+     <option value="1200">$1200</option>
+     <option value="1400">$1400</option>
+     <option value="1600">$1600</option>
+   </select>
+
+  <button type='submit'>Search</button>
+</form>
+
+<h3>Search for questions</h3>
+
+<% if (questions.length) { %>
+  <ul>
+    <% questions.forEach(function(question) { %>
+
+       <li>
+         <div class='question'>
+           <div class='category'>Category: <%= question.category %></div>
+           <div class='air-date'>Air Date: <%= question.airDate %></div>
+           <div class='question-question'><%= question.question %></div>
+           <div class='value'>Value: $<%= question.value %></div>
+           <div class='answer'>Answer: <%= question.answer %>?</div>
+         </div>
+         <hr>
+       </li>
+  
+    <% }); %>
+  <ul>
+<% } else { %>
+  <h4>No questions found.</h4>
+<% } %>
+
+</body>
+</html>

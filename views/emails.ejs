@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+<h1>Enron Emails</h1>
+
+<a href='/emails/2'>Next page</a>
+
+<ul>
+<% emails.forEach(function(email){ %>
+  <li>
+    <div class='email'>
+      <div class='from'>From: <%= email.sender %></div>
+      <div class='subject'>Subject: <%= email.subject %></div>
+    </div>
+  </li>
+<% }); %>
+</ul>
+
+</body>
+</html>
