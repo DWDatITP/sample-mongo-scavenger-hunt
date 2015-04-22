@@ -32,7 +32,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/jeopardy', function(req, res){
-  res.render('jeopardy', {questions:[], search:''});
+  res.render('jeopardy', {questions:[], search:'', value:''});
 });
 
 app.get('/jeopardy/search', function(req, res){
