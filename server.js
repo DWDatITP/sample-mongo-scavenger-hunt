@@ -42,13 +42,13 @@ app.get('/jeopardy/search', function(req, res){
 
   var query = Question.find();
   if (search) {
-    query = query.$where('this.question.indexOf("' + search + '") > -1');
+    query.$where('this.question.indexOf("' + search + '") > -1');
   }
   if (value) {
-    query = query.where('value').gte(value);
+    query.where('value').gte(value);
   }
   if (answer) {
-    query = query.$where('this.answer.indexOf("' + answer + '") > -1');
+    query.$where('this.answer.indexOf("' + answer + '") > -1');
   }
 
   query.exec(function(err, questions){
@@ -70,10 +70,7 @@ app.get('/emails/search', function(req, res){
   var subject = req.query.subject;
 
   var query = Email.find().limit(25);
-  query = query.$where('this.subject.indexOf("' + subject + '") > -1');
-
-  console.log('searchign for',subject);
-  console.log('query',query);
+  query.$where('this.subject.indexOf("' + subject + '") > -1');
 
   query.exec(function(err, emails) {
     res.render('emails', {emails: emails, page: page, subject: subject});
