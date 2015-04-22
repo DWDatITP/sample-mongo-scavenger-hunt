@@ -3,7 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var port = process.env.PORT || 5000;
 var mongoose = require('mongoose');
-var mongoDbUri = process.env.MONGOLAB_URI || 'mongodb://localhost/sample-mongo-scavenger-hunt';
+// var mongoDbUri = process.env.MONGOLAB_URI || 'mongodb://localhost/sample-mongo-scavenger-hunt';
+var mongoDbUri = 'mongodb://heroku_app36113912:vg3efitofs0i5j2lo05fslb4tc@ds043348.mongolab.com:43348/heroku_app36113912';
 
 mongoose.connect(mongoDbUri);
 var db = mongoose.connection.db;
@@ -13,7 +14,6 @@ db.on('error', function(err){
 db.on('open', function(){
   console.log('Connected to Mongo');
 });
-
 
 var Question = require('./models/question');
 var Email    = require('./models/email');
@@ -76,9 +76,6 @@ app.get('/people', function(req, res){
 app.get('/people/:id', function(req, res){
   res.render('person', {person: {}, color: {}});
 });
-
-// show users
-// with favorite colors
 
 app.listen(port, function(){
   console.log('Listening on ',port);
