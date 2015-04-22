@@ -92,11 +92,22 @@ app.get('/emails/:page', function(req, res){
 });
 
 app.get('/people', function(req, res){
-  res.render('people', {people:[]});
+  Person.find(function(err, people){
+    if (err) {
+      return res.send(err);
+    }
+    res.render('people', {people:people});
+  });
 });
 
 app.get('/people/:id', function(req, res){
-  res.render('person', {person: {}, color: {}});
+  var id = req.params.id;
+  Person.findById(id, function(err, person){
+    var colorId = person.colorId;
+    Color.findById(colorId, function(err, color) {
+      res.render('person', {person: person, color: color});
+    });
+  });
 });
 
 app.listen(port, function(){
