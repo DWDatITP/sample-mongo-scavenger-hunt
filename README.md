@@ -5,7 +5,7 @@ complete the challenges shown on the homepage for points.
 
 ## Install
 
- * `git clone git@github.com:DWDatITP/sample-mongo-scavenger-hunt.git`
+ * `git clone https://github.com/DWDatITP/sample-mongo-scavenger-hunt.git`
  * `cd sample-mongo-scavenger-hunt`
  * `npm install` 
  * `nodemon server.js`
